@@ -2,7 +2,7 @@
     "name": "gressus/tools",
     "description": "Tools for PHP Development",
     "require": {
-        "php": "5.4.0"
+        "php": ">= 5.4.0"
     },
     "authors": [
         {
