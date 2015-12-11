@@ -1,0 +1,19 @@
+{
+    "name": "gressus/tools",
+    "description": "Tools for PHP Development",
+    "require": {
+        "php": "5.4.0"
+    },
+    "authors": [
+        {
+            "name": "Felix Krüger",
+            "email": "felix@gressus.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Gressus\\Tools\\": "Classes/"
+        }
+    },
+    "minimum-stability": "stable"
+}
