@@ -18,10 +18,20 @@ namespace Gressus\Tools;
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class CsvService {
-	/**
+    /**
+     * @var string
+     */
+    protected $toEncoding = 'utf-8';
+    /**
+     * String
+     * @var string|false
+     */
+    protected $forceUtf8EncodeFrom = false;
+
+    /**
 	 * Filename (complete path)
 	 * @var string
 	 */
@@ -59,6 +69,35 @@ class CsvService {
 		return $this;
 	}
 
+    /**
+     * @return string
+     */
+    public function getToEncoding() {
+        return $this->toEncoding;
+    }
+
+    /**
+     * @param string $toEncoding
+     */
+    public function setToEncoding($toEncoding) {
+        $this->toEncoding = $toEncoding;
+    }
+
+    /**
+     * @return boolean|string
+     */
+    public function getForceUtf8EncodeFrom() {
+        return $this->forceUtf8EncodeFrom;
+    }
+
+    /**
+     * @param $forceUtf8EncodeFrom
+     * @return $this
+     */
+    public function setForceUtf8EncodeFrom($forceUtf8EncodeFrom) {
+        $this->forceUtf8EncodeFrom = $forceUtf8EncodeFrom;
+        return $this;
+    }
 	/**
 	 * Set Filename
 	 * @param string $fileName
@@ -77,12 +116,22 @@ class CsvService {
 		return $this->fileName;
 	}
 
+	/**
+	 * Count rows
+	 * @param null $fileName
+	 * @return int
+	 * @throws \Exception
+	 */
     public function countRows($fileName = null){
         if (null !== $fileName) {
             $this->setFileName($fileName);
         }
-        if (!$this->fileName) throw new \Exception('No filename is set');
-        if (!file_exists($this->fileName)) throw new \Exception(sprintf('File %s does not exist', $this->fileName));
+        if (!$this->fileName) {
+            throw new \Exception('No filename is set');
+        }
+        if (!file_exists($this->fileName)) {
+            throw new \Exception(sprintf('File %s does not exist', $this->fileName));
+        }
         $lines = file($this->fileName);
         return count($lines);
     }
@@ -99,21 +148,28 @@ class CsvService {
 		if (null !== $fileName) {
 			$this->setFileName($fileName);
 		}
-		if (!$this->fileName) throw new \Exception('No filename is set');
-		if (!file_exists($this->fileName)) throw new \Exception(sprintf('File %s does not exist', $this->fileName));
+		if (!$this->fileName){
+            throw new \Exception('No filename is set');
+        }
+		if (!file_exists($this->fileName)){
+            throw new \Exception(sprintf('File %s does not exist', $this->fileName));
+        }
+
 		if (null === $csvOptions) {
 			$csvOptions = $this->analyzeCsv();
 		}
-		if (!isset($csvOptions['delimiter']) || !isset($csvOptions['enclosure'])) throw new \Exception('CSV-Options not correctly set. ' . print_r($csvOptions, true));
+		if (!isset($csvOptions['delimiter']) || !isset($csvOptions['enclosure'])) {
+            throw new \Exception('CSV-Options not correctly set. ' . print_r($csvOptions, true));
+        }
 
-		$handle = fopen($this->fileName, "r"); // Datei zum Lesen öffnen
+		$handle = fopen($this->fileName, "r");
 		if ($handle === FALSE) {
 			throw new \Exception('No Handle');
 		}
 
 
 		$this->data = array();
-		while (($columnData = fgetcsv($handle, 0, $csvOptions['delimiter'], $csvOptions['enclosure'])) !== FALSE) { // Daten werden aus der Datei
+		while (($columnData = fgetcsv($handle, 0, $csvOptions['delimiter'], $csvOptions['enclosure'])) !== FALSE) {
 
             if (count(array_filter($columnData)) !== 0) {
                 $this->data[] = $columnData;
@@ -167,13 +223,11 @@ class CsvService {
 					$associatedData[$headerTitle] = $data[$headerIndex];
 				}
 			}
-
 			$this->associatedArrayData[] = $associatedData;
 		}
 
-        // adapt encoding - works for cora-workflow (October 2012)
         $encoding = $this->detectEncoding();
-        if (strtolower($encoding) !== 'utf-8') {
+        if (strtolower($encoding) !== $this->toEncoding) {
             $this->convertFromEncoding($encoding);
         }
 
@@ -181,37 +235,44 @@ class CsvService {
 	}
 
     /**
-     * uses linux shell command to detect encoding
-	 *
+     *
      * @return string
+     * @throws \Exception
      */
     public function detectEncoding() {
-        $result = exec('file --mime-encoding ' . $this->getFileName());
-        $arr = explode(': ', $result);
-        $encoding = array_pop($arr);
-        if ($encoding==='unknown-8bit') {     // fallback
-            return 'Windows-1252';
+
+        if($this->forceUtf8EncodeFrom !== false){
+            return $this->forceUtf8EncodeFrom;
         }
+        if(!is_callable('mb_detect_encoding')){
+            throw new \Exception('Could not call required method "mb_detect_encoding".');
+        }
+        $encoding = mb_detect_encoding (file_get_contents($this->getFileName()));
+
         return $encoding;
     }
+
     /**
      * Convert encoding of Csv-data -
-     *
      * @param $encoding
-     * @return CsvService
+     * @return $this
+     * @throws \Exception
      */
     public function convertFromEncoding($encoding) {
+        if(!is_callable('mb_convert_encoding')){
+            throw new \Exception('Could not call required method "mb_convert_encoding".');
+        }
         foreach ($this->data as $index => $data) {
             foreach ($data as $key => $value) {
                 $value = $this->data[$index][$key];
-                $this->data[$index][$key] = mb_convert_encoding($value, 'utf-8', $encoding);
+                $this->data[$index][$key] = mb_convert_encoding($value, $this->toEncoding, $encoding);
             }
         }
 
         foreach ($this->associatedArrayData as $index => $data) {
             foreach ($data as $key => $value) {
                 $value = $this->associatedArrayData[$index][$key];
-                $this->associatedArrayData[$index][$key] = mb_convert_encoding($value, 'utf-8', $encoding);
+                $this->associatedArrayData[$index][$key] = mb_convert_encoding($value, $this->toEncoding, $encoding);
             }
         }
         return $this;
@@ -225,8 +286,9 @@ class CsvService {
 	 */
 	public function write($append = false) {
 
-		if (!$this->fileName) throw new \Exception('No filename is set');
-		//if($append && !file_exists($this->fileName)) throw new \Exception(sprintf('File %s does not exist',$this->fileName));
+		if (!$this->fileName){
+            throw new \Exception('No filename is set');
+        }
         if($this->headerColumn === null){
             $headerCols = array();
             foreach ($this->associatedArrayData as $row) {
@@ -275,36 +337,6 @@ class CsvService {
 		return $this;
 	}
 
-
-	/**
-	 * Analyze CSV (detecting enclosure and delimiter)
-	 *
-	 * only checks for ',", and ",",";"
-	 *
-	 * @return array
-	 */
-	protected function analyzeCsv() {
-		$options = array(
-			'delimiter' => ',',
-			'enclosure' => '"'
-		);
-		$possibleDelimiters = array(
-			'"',
-			"'"
-		);
-		$contents = file_get_contents($this->fileName);
-		$firstChar = substr($contents, 0, 1);
-
-		if (in_array($firstChar, $possibleDelimiters)) {
-			$options['enclosure'] = $firstChar;
-		}
-
-		if (substr_count($contents, ';') > substr_count($contents, ',')) {
-			$options['delimiter'] = ';';
-		}
-		return $options;
-
-	}
 
 	/**
 	 * Set Associated Array data
@@ -376,5 +408,35 @@ class CsvService {
 		return $this->headerColumn;
 	}
 
+
+    /**
+     * Analyze CSV (detecting enclosure and delimiter)
+     *
+     * only checks for ',", and ",",";"
+     *
+     * @return array
+     */
+    protected function analyzeCsv() {
+        $options = array(
+            'delimiter' => ',',
+            'enclosure' => '"'
+        );
+        $possibleDelimiters = array(
+            '"',
+            "'"
+        );
+        $contents = file_get_contents($this->fileName);
+        $firstChar = substr($contents, 0, 1);
+
+        if (in_array($firstChar, $possibleDelimiters)) {
+            $options['enclosure'] = $firstChar;
+        }
+
+        if (substr_count($contents, ';') > substr_count($contents, ',')) {
+            $options['delimiter'] = ';';
+        }
+        return $options;
+
+    }
 
 }

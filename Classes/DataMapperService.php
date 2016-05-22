@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -13,14 +12,14 @@
  ***************************************************************/
 namespace Gressus\Tools;
 use \Gressus\Tools\Converter\ConverterInterface;
-use Gressus\Tools\Filter\FilterInterface;
+use \Gressus\Tools\Filter\FilterInterface;
 use \Gressus\Tools\Mapper\MapperInterface;
 /**
  * Data Mapper
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  *
  */
 class DataMapperService {
@@ -57,8 +56,41 @@ class DataMapperService {
         $this->postFilter = $postFilter;
     }
 
+	/**
+	 * Map
+	 * @param $input
+	 * @return array
+	 */
+	public function map($input) {
+		$output = array();
+		foreach ($input as $item) {
 
-    /**
+			if(!$this->doesItemMatchFilters($item,$this->preFilter)){
+				continue;
+			}
+			$mappedItem = $this->mapItem($item);
+			if(!$this->doesItemMatchFilters($mappedItem,$this->postFilter)){
+				continue;
+			}
+			$output[] = $mappedItem;
+		}
+		return $output;
+	}
+
+	/**
+	 * Map Item
+	 * @param $input
+	 * @return array
+	 */
+	public function mapItem($input) {
+		if (is_array($input)) {
+			return $this->mapArray($input);
+		}
+		return null;
+	}
+
+
+	/**
 	 * Set Map
 	 * @param $map
 	 */
@@ -132,19 +164,6 @@ class DataMapperService {
 		$this->postFilter = $postFilter;
 	}
 
-
-	/**
-	 * Map Item
-	 * @param $input
-	 * @return array
-	 */
-	public function mapItem($input) {
-		if (is_array($input)) {
-			return $this->mapArray($input);
-		}
-		return null;
-	}
-
 	/**
 	 * Map Array
 	 * @param $input
@@ -179,27 +198,6 @@ class DataMapperService {
 		return $output;
 	}
 
-	/**
-	 * Map
-	 * @param $input
-	 * @param DataMapperService $dataMapper
-	 * @return array
-	 */
-	public function map($input,DataMapperService $dataMapper = null) {
-		$output = array();
-		foreach ($input as $item) {
-
-			if(!$this->doesItemMatchFilters($item,$this->preFilter)){
-				continue;
-			}
-			$mappedItem = $this->mapItem($item);
-			if(!$this->doesItemMatchFilters($mappedItem,$this->postFilter)){
-				continue;
-			}
-			$output[] = $mappedItem;
-		}
-		return $output;
-	}
 
 	/**
 	 * @param $item

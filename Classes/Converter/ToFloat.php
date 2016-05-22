@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -13,11 +13,11 @@
 namespace Gressus\Tools\Converter;
 use \Gressus\Tools\DataMapperService;
 /**
- * To Decimal percent Converter
+ * To Float Converter
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class ToFloat extends AbstractConverter {
     /**
@@ -26,7 +26,7 @@ class ToFloat extends AbstractConverter {
      */
     protected $options = 2;
 	/**
-	 * Convert to decimal percent
+	 * Convert to float
 	 * @param mixed $input
 	 * @param \Gressus\Tools\DataMapperService $dataMapper
      * @param string $fieldName

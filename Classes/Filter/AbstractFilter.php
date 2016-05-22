@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -16,7 +16,7 @@ namespace Gressus\Tools\Filter;
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <krueger@gressus.de>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 abstract class AbstractFilter implements FilterInterface {
 	/**
@@ -29,8 +29,9 @@ abstract class AbstractFilter implements FilterInterface {
 	protected $options;
 
 	/**
-	 * Construct
-	 * @param AbstractFilter $nextFilter
+	 * AbstractFilter constructor.
+	 * @param null $options
+	 * @param AbstractFilter|null $nextFilter
 	 */
 	public function __construct($options = null,AbstractFilter $nextFilter = null){
 
@@ -40,7 +41,7 @@ abstract class AbstractFilter implements FilterInterface {
 	}
 
 	/**
-	 * Distinct
+	 * Filter
 	 * @param array $values
 	 * @return mixed
 	 */

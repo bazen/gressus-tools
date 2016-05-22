@@ -1,5 +1,5 @@
 <?php
-
+namespace Gressus\Tools;
 require('../autoload.php');
 
 
@@ -16,6 +16,8 @@ $data = array(
 );
 
 
-$csvService = new \Gressus\Tools\CsvService();
-
-$csvService->setAssociatedArrayData($data)->setFileName('../Data/example-data-write.csv')->write();
+$csvService = new CsvService();
+$csvService
+    ->setAssociatedArrayData($data)
+    ->setFileName('../Data/example-data-write.csv')
+    ->write();

@@ -12,36 +12,34 @@
  ***************************************************************/
 namespace Gressus\Tools\Reducer;
 /**
- * Min Value Reducer
+ * Max Value Reducer
  *
  * @category Gressus
  * @package Gressus_Tools
  * @author Felix Krüger <f3l1x@gressus.de>
  */
-class MinReducer extends AbstractReducer {
+class MaxReducer extends AbstractReducer {
 
 
     /**
-     * Return Minimum
+     * Return Maximum
      * @param array $values
      * @param string $key
      * @param string $input
      * @return mixed
      */
     public function reduce($values,$key,$input){
-        $min = null;
+        $max = null;
         if(count($values)){
-            $min = floatval($values[0]);
+            $max = floatval($values[0]);
             foreach($values as $value){
                 $value = floatval($value);
-                if($value < $min){
-                    $min = $value;
+                if($value > $max){
+                    $max = $value;
                 }
             }
         }
-
-
-        return $min ;
+        return $max ;
 	}
 
 

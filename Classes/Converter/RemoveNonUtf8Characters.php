@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -13,17 +13,20 @@
 namespace Gressus\Tools\Converter;
 use \Gressus\Tools\DataMapperService;
 /**
- * Utf8 Converter
+ * Remove non utf-8
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class RemoveNonUtf8Characters extends AbstractConverter {
 
 
 	/**
 	 * Convert To Utf8
+     * Thanks to
+     * https://magp.ie/2011/01/06/remove-non-utf8-characters-from-string-with-php/
+     *
 	 * @param mixed $input
 	 * @param \Gressus\Tools\DataMapperService $dataMapper
      * @param string $fieldName

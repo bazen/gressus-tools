@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -13,14 +12,14 @@
  ***************************************************************/
 namespace Gressus\Tools;
 /**
- * Data Mapper
+ * Reducer
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <krueger@gressus.de>
+ * @author Felix Krüger <f3l1x@gressus.de>
  *
  */
-use Gressus\Tools\Filter\FilterInterface;
+use \Gressus\Tools\Filter\FilterInterface;
 use \Gressus\Tools\Reducer\FirstReducer;
 
 class ReducerService {
@@ -48,8 +47,10 @@ class ReducerService {
 
 
     /**
-     * @param string $groupBy
-     * @param array $reducerMap
+     * ReducerService constructor.
+     * @param null $groupBy
+     * @param null $reducerMap
+     * @param array $filter
      */
     public function __construct($groupBy = null, $reducerMap = null,$filter = array()) {
         $this->groupBy = $groupBy;
@@ -59,15 +60,15 @@ class ReducerService {
 	}
 
 	/**
-	 * Set Map
-	 * @param $map
+	 * Set Reducer
+	 * @param $reducer
 	 */
-	public function setReducer($map) {
-		$this->reducer = $map;
+	public function setReducer($reducer) {
+		$this->reducer = $reducer;
 	}
 
 	/**
-	 * Get Map
+	 * Get Reducer
 	 * @return array
 	 */
 	public function getReducer() {
@@ -146,7 +147,7 @@ class ReducerService {
                 }
                 list($filterKey,$filterObject) = $filter;
                 if(!$filterObject instanceof FilterInterface ){
-                    throw new \Exception('Filter be instance of \Gressus\Tools\Filter\FilterInterface');
+                    throw new \Exception('Filter must be instance of \Gressus\Tools\Filter\FilterInterface');
                 }
                 $matches = $matches && $filterObject->matchesCondition(isset($arr[$filterKey]) ? $arr[$filterKey] : null);
             }

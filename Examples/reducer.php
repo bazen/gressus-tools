@@ -1,18 +1,20 @@
 <?php
 
+namespace Gressus\Tools;
+
 require('../autoload.php');
 
 
-$reducer = new Gressus\Tools\ReducerService(
+$reducer = new ReducerService(
     'group',
     array(
-        'id' => new Gressus\Tools\Reducer\ConcatReducer(),
-        'name' => new Gressus\Tools\Reducer\ConcatReducer(array('distinct' => true)),
-        'score' => new Gressus\Tools\Reducer\SumReducer(),
+        'id' => new Reducer\ConcatReducer(),
+        'name' => new Reducer\ConcatReducer(array('distinct' => true)),
+        'score' => new Reducer\SumReducer(),
     ),
     array(
-        array('score',new \Gressus\Tools\Filter\GreaterThanFilter(0)),
-        array('score',new \Gressus\Tools\Filter\LowerThanFilter(10)),
+        array('score',new Filter\GreaterThanFilter(0)),
+        array('score',new Filter\LowerThanFilter(10)),
     )
 );
 

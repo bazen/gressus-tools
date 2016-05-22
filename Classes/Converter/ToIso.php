@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -17,13 +17,13 @@ use \Gressus\Tools\DataMapperService;
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class ToIso extends AbstractConverter {
 
 
 	/**
-	 * Convert To Utf8
+	 * Decode From Utf8
 	 * @param mixed $input
 	 * @param \Gressus\Tools\DataMapperService $dataMapper
      * @param string $fieldName

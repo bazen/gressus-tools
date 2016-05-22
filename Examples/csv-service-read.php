@@ -1,9 +1,9 @@
 <?php
-
+namespace Gressus\Tools;
 require('../autoload.php');
 
 
-$csvService = new \Gressus\Tools\CsvService();
+$csvService = new CsvService();
 
 $csvService->read('../Data/example-data.csv');
 

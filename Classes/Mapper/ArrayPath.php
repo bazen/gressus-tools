@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -12,13 +12,14 @@
  ***************************************************************/
 namespace Gressus\Tools\Mapper;
 use \Gressus\Tools\DataMapperService;
+use \Gressus\Tools\ObjectAccess;
 
 /**
- * Static Value Mapper
+ * ArrayPath Value Mapper
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class ArrayPath extends AbstractMapper {
 	/**
@@ -29,36 +30,9 @@ class ArrayPath extends AbstractMapper {
 	public function map($input,DataMapperService $dataMapper = null){
 
 
-        $paths = $this->options;
-        if(!is_array($paths)){
-            $paths = array($paths);
-        }
-
-        foreach($paths as $p){
-            $path = explode('/',$p);
-            $result = $this->getIterative($input,$path);
-            if($result){
-                return $result;
-            }
-        }
-		return null;
+        $path = $this->options;
+        $result = ObjectAccess::get($input,$path);
+		return $result;
 	}
-
-    /**
-     * @param array $array
-     * @param array $path
-     * @return null
-     */
-    protected function getIterative($array,$path){
-        $firstPathPart = array_shift($path);
-        if(!isset($array[$firstPathPart])){
-            return null;
-        }
-        $value = $array[$firstPathPart];
-        if(count($path)){
-            return $this->getIterative($value,$path);
-        }
-        return $value;
-    }
-
+ 
 }

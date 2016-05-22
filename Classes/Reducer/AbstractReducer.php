@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -16,7 +16,7 @@ namespace Gressus\Tools\Reducer;
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <krueger@gressus.de>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 abstract class AbstractReducer implements ReducerInterface {
 	/**
@@ -29,8 +29,9 @@ abstract class AbstractReducer implements ReducerInterface {
 	protected $alternativeColumn;
 
 	/**
-	 * Construct
+	 * AbstractReducer constructor.
 	 * @param mixed $options
+	 * @param string $alternativeColumn
 	 */
 	public function __construct( $options = null,$alternativeColumn = null){
 

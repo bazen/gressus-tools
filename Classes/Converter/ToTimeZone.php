@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -13,11 +13,11 @@
 namespace Gressus\Tools\Converter;
 use \Gressus\Tools\DataMapperService;
 /**
- * Format Date Converter
+ * Convert To Timezone Date Converter
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class ToTimeZone extends AbstractConverter {
 

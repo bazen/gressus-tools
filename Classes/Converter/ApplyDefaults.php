@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -13,17 +13,17 @@
 namespace Gressus\Tools\Converter;
 use \Gressus\Tools\DataMapperService;
 /**
- * Utf8 Converter
+ * Apply Defaults
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <mail@felixkrueger.net>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class ApplyDefaults extends AbstractConverter {
 
 
 	/**
-	 * Convert To Utf8
+	 * Apply Default
 	 * @param mixed $input
 	 * @param \Gressus\Tools\DataMapperService $dataMapper
      * @param string $fieldName

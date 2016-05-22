@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012
+ *  (c) 2016
  *  All rights reserved
  *
  *  GRESSUS
@@ -12,11 +12,11 @@
  ***************************************************************/
 namespace Gressus\Tools\Filter;
 /**
- * Distinct Values Reducer
+ * Greater Than Filter
  *
  * @category Gressus
  * @package Gressus_Tools
- * @author Felix Krüger <krueger@gressus.de>
+ * @author Felix Krüger <f3l1x@gressus.de>
  */
 class GreaterThanFilter extends AbstractFilter {
 
