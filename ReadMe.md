@@ -6,7 +6,7 @@ Gressus Tools is a collection of PHP Scripts for easy Data Manipulation, CSV rea
 
 ## Data Mapping
 
-You can map a source Array to a target array and even apply filters and post converters.
+You can map a source array to a target array and even apply filters and post converters.
 This can help you when programming Import-Scriopts with large datasets from one format to another.
 
 ```php
