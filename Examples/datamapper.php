@@ -48,7 +48,7 @@ $data = array(
 
 $mappedData = $dataMapperService->map($data);
 
-print_r($mappedData);
+print(json_encode($mappedData,JSON_PRETTY_PRINT));
 
 
 $csvService = new CsvService();

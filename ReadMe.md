@@ -7,7 +7,7 @@ Gressus Tools is a collection of PHP Scripts for easy Data Manipulation, CSV rea
 ## Data Mapping
 
 You can map a source array to a target array and even apply filters and post converters.
-This can help you when programming Import-Scriopts with large datasets from one format to another.
+This can help you when programming Import-Scripts with large datasets from one format to another.
 
 ```php
 namespace Gressus\Tools;
@@ -56,10 +56,72 @@ $data = array(
 
 $mappedData = $dataMapperService->map($data);
 
-print_r($mappedData);
+print(json_encode($mappedData,JSON_PRETTY_PRINT));
 
 
 ```
+
+
+Output:
+```json
+[
+    {
+        "Identifier": "2",
+        "Group + Name": "Police Kerstin Meyer",
+        "Counter": 2,
+        "FirstChar": "K",
+        "Name": "Kerstin Meyer",
+        "Hash": "150ca40755bb997e775fcd0a94fc0147",
+        "Weapons": "Walter , Tonfa"
+    },
+    {
+        "Identifier": "3",
+        "Group + Name": "Police Thomas Taffil",
+        "Counter": 3,
+        "FirstChar": "T",
+        "Name": "Thomas Taffil",
+        "Hash": "e80d48253791a5a083f2b49b0d4a7b70",
+        "Weapons": "Walter , Tonfa"
+    },
+    {
+        "Identifier": "5",
+        "Group + Name": "Gangster Hafti",
+        "Counter": 4,
+        "FirstChar": "H",
+        "Name": "Hafti",
+        "Hash": "e8bf5ce0d5e2d75346b5b4e1282c47d6",
+        "Weapons": "Knife , AKAI 47"
+    },
+    {
+        "Identifier": "8",
+        "Group + Name": "Press Sz",
+        "Counter": 5,
+        "FirstChar": "S",
+        "Name": "Sz",
+        "Hash": "8ad9d3eae1f9fa75fdbcb3fbd0bac00e",
+        "Weapons": null
+    },
+    {
+        "Identifier": "9",
+        "Group + Name": "Press Max",
+        "Counter": 6,
+        "FirstChar": "M",
+        "Name": "Max",
+        "Hash": "8a85c8790f0029a12584bec43c1734d0",
+        "Weapons": null
+    },
+    {
+        "Identifier": "10",
+        "Group + Name": "Press Max",
+        "Counter": 7,
+        "FirstChar": "M",
+        "Name": "Max",
+        "Hash": "9b5b1d4c5ca965f0d2bcd4e039b48cba",
+        "Weapons": null
+    }
+]
+```
+
 ## Data Reducing
 (behaves like MySQL group by on PHP Arrays)
 
@@ -95,7 +157,23 @@ $data = array(
 
 $reducedData = $reducer->reduce($data);
 
-print_r($reducedData);
+print(json_encode($reducedData,JSON_PRETTY_PRINT));
+```
+
+Output:
+```json
+{
+    "Police": {
+        "id": "1, 2, 3",
+        "name": "Melanie, Kerstin, Thomas",
+        "score": 6
+    },
+    "Press": {
+        "id": "8, 9, 10",
+        "name": "Sz, Max",
+        "score": 7
+    }
+}
 ```
 ## Read CSV Data
 

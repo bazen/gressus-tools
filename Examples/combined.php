@@ -41,7 +41,7 @@ $dataMapperService = new DataMapperService(
 
 $mappedData = $dataMapperService->map($csvData);
 
-print_r($mappedData);
+print(json_encode($mappedData,JSON_PRETTY_PRINT));
 
 
 
@@ -59,7 +59,7 @@ $reducer = new ReducerService(
 
 $reducedData = $reducer->reduce($mappedData);
 
-print_r($reducedData);
+print(json_encode($reducedData,JSON_PRETTY_PRINT));
 
 $csvService = new CsvService();
 

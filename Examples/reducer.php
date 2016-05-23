@@ -35,4 +35,4 @@ $data = array(
 
 $reducedData = $reducer->reduce($data);
 
-print_r($reducedData);
+print(json_encode($reducedData,JSON_PRETTY_PRINT));
