@@ -35,7 +35,7 @@ class FirstOfArray extends AbstractConverter {
 	 */
 	public function convert($input,DataMapperService $dataMapper,$fieldName){
 	 	if(is_array($input)){
-			 return array_pop($input);
+			 return array_shift($input);
 		 }
 		//Fallback
 		return $input;

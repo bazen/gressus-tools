@@ -35,7 +35,7 @@ class LastOfArray extends AbstractConverter {
 	 */
 	public function convert($input,DataMapperService $dataMapper,$fieldName){
 	 	if(is_array($input)){ 
-			 return array_shift($input);
+			 return array_pop($input);
 		 }
 		//Fallback
 		return $input;
