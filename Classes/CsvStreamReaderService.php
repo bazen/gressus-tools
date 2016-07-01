@@ -56,6 +56,9 @@ class CsvStreamReaderService {
 	 */
 	public function getRow(){
 		$columnData = fgetcsv($this->fileHandle, 0, $this->csvOptions['delimiter'], $this->csvOptions['enclosure']);
+		if($columnData === false){
+			fclose($this->fileHandle);
+		}
 		return $columnData;
 	}
 
