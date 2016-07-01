@@ -59,7 +59,14 @@ class CsvStreamReaderService {
 		if($columnData === false){
 			fclose($this->fileHandle);
 		}
-		return $columnData;
+		$associatedData = array();
+		foreach ($this->headerColumn  as $headerIndex => $headerTitle) {
+			if (isset($columnData[$headerIndex])) {
+				$associatedData[$headerTitle] = $columnData[$headerIndex];
+			}
+		}
+
+		return $associatedData;
 	}
 
 	/**
