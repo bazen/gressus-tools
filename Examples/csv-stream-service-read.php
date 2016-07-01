@@ -6,7 +6,8 @@ require('../autoload.php');
 $csvService = new CsvStreamReaderService();
 
 $csvService->init('../Data/example-data.csv');
-while($csvService->getRow()){
-    print_r($csvService->getRow());
+while(($row = $csvService->getRow()) !== FALSE){
+    if(!$csvService->isEmpty($row)){
+        print_r($row);
+    }
 }
- 

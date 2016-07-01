@@ -50,9 +50,22 @@ class CsvStreamReaderService {
 		}
 	}
 
+	/**
+	 * Get Row
+	 * @return array
+	 */
 	public function getRow(){
 		$columnData = fgetcsv($this->fileHandle, 0, $this->csvOptions['delimiter'], $this->csvOptions['enclosure']);
 		return $columnData;
+	}
+
+	/**
+	 * Is an empty Row
+	 * @param $row
+	 * @return bool
+	 */
+	public function isEmpty($row){
+		return count(array_filter($row)) === 0;
 	}
 
 }
