@@ -30,7 +30,9 @@ class Trim extends AbstractConverter {
 	 * @return mixed|string
 	 */
 	public function convert($input,DataMapperService $dataMapper,$fieldName){
-
+		if($this->options){
+			return trim($input,$this->options);
+		}
 		return trim($input);
 	}
 
