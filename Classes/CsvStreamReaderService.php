@@ -58,6 +58,7 @@ class CsvStreamReaderService {
 		$columnData = fgetcsv($this->fileHandle, 0, $this->csvOptions['delimiter'], $this->csvOptions['enclosure']);
 		if($columnData === false){
 			fclose($this->fileHandle);
+			return false;
 		}
 		$associatedData = array();
 		foreach ($this->headerColumn  as $headerIndex => $headerTitle) {
