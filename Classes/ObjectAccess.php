@@ -59,6 +59,9 @@ class ObjectAccess {
             if(isset($object->$currentKey)){
                 return self::get($object->$currentKey,$query,$default);
             }
+            if(is_callable(array($object, 'getData'))){
+                return self::get($object->getData($currentKey),$query,$default);
+            }
 
         }
         return $default;
