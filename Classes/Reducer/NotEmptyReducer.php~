@@ -39,7 +39,7 @@ class NotEmptyReducer extends AbstractReducer {
             }
         }
 
-        return  $this->options  ;
+        return  null ;
 	}
 
 
