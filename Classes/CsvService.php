@@ -220,7 +220,7 @@ class CsvService {
 
 			foreach ($headerColumn as $headerIndex => $headerTitle) {
 				if (isset($data[$headerIndex])) {
-					$associatedData[$headerTitle] = $data[$headerIndex];
+					$associatedData[$headerTitle.""] = $data[$headerIndex];
 				}
 			}
 			$this->associatedArrayData[] = $associatedData;
