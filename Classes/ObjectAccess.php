@@ -81,4 +81,51 @@ class ObjectAccess {
         }
         return $value;
     }
+
+    /**
+     * Set Value in nested array or object
+     *
+     * instead of this:
+     * $array = array(
+     *   'foo' => array(
+     *      'bar' => 'baz'
+     *   )
+     * );
+     * you can use this:
+     *
+     * $array = ObjectAccess::set([],'foo/bar','baz);
+     *
+     *
+     * @param array|Object $object
+     * @param string|array $query
+     * @param mixed $value
+     * @param string $delimiter
+     * @return null
+     */
+    public static function set($object, $query, $value, $delimiter = '/'){
+        if(is_string($query)){
+            $query = explode($delimiter,$query);
+        }
+        if(count($query) == 1){
+             $object[$query[0]] = $value;
+
+        }
+        $currentKey = array_shift($query);
+        if(is_array($object)){
+            if(!isset($object[$currentKey])){
+                $object[$currentKey] = [];
+            }
+            $object[$currentKey] = self::set($object[$currentKey],$query,$value,$delimiter);
+
+
+
+        }else if(is_object($object)){
+            if(isset($object->$currentKey)){
+                 $object->$currentKey = new \stdClass();
+            }
+            $object->$currentKey = self::set($object->$currentKey,$query,$value,$delimiter);
+
+        }
+        return $object;
+    }
 }
