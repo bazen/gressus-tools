@@ -107,8 +107,8 @@ class ObjectAccess {
             $query = explode($delimiter,$query);
         }
         if(count($query) == 1){
-             $object[$query[0]] = $value;
-
+            $object[$query[0]] = $value;
+            return $object;
         }
         $currentKey = array_shift($query);
         if(is_array($object)){
