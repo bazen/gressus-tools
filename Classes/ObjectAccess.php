@@ -107,7 +107,11 @@ class ObjectAccess {
             $query = explode($delimiter,$query);
         }
         if(count($query) == 1){
-            $object[$query[0]] = $value;
+            if (is_array($object)) {
+                $object[$query[0]] = $value;
+            } else if (is_object($object)) {
+                $object->{$query[0]} = $value;
+            }
             return $object;
         }
         $currentKey = array_shift($query);
@@ -120,7 +124,7 @@ class ObjectAccess {
 
 
         }else if(is_object($object)){
-            if(isset($object->$currentKey)){
+            if(!isset($object->$currentKey)){
                  $object->$currentKey = new \stdClass();
             }
             $object->$currentKey = self::set($object->$currentKey,$query,$value,$delimiter);
