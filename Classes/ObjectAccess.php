@@ -11,6 +11,9 @@
  * @package Gressus_Tools
  ***************************************************************/
 namespace Gressus\Tools;
+
+use Gressus\Tools\Exception\NotFoundException;
+
 /**
  * Object Access
  *
@@ -19,8 +22,6 @@ namespace Gressus\Tools;
  * @author Felix Krüger <f3l1x@gressus.de>
  *
  */
-
-
 class ObjectAccess {
 
     /**
@@ -77,7 +78,7 @@ class ObjectAccess {
     public static function getOrThrowException($object, $query){
         $value = self::get($object,$query);
         if($value === null){
-            throw new \Exception('Could Not Retrieve '.$query);
+            throw new NotFoundException('Could Not Retrieve '.$query);
         }
         return $value;
     }
