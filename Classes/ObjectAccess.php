@@ -39,7 +39,7 @@ class ObjectAccess {
      * @param array|Object $object
      * @param string $query
      * @param mixed $default
-     * @return null
+     * @return mixed
      */
     public static function get($object, $query, $default = null){
         if(is_string($query)){
@@ -101,7 +101,7 @@ class ObjectAccess {
      * @param string|array $query
      * @param mixed $value
      * @param string $delimiter
-     * @return null
+     * @return array|Object
      */
     public static function set($object, $query, $value, $delimiter = '/'){
         if(is_string($query)){
