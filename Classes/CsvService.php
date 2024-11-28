@@ -166,7 +166,14 @@ class CsvService {
 		if ($handle === FALSE) {
 			throw new \Exception('No Handle');
 		}
-
+		// BOM as a string for comparison.
+		$bom = "\xef\xbb\xbf";
+		
+		// Progress file pointer and get first 3 characters to compare to the BOM string.
+		if (fgets($handle, 4) !== $bom) {
+		    // BOM not found - rewind pointer to start of file.
+		    rewind($handle);
+		}
 
 		$this->data = array();
 		while (($columnData = fgetcsv($handle, 0, $csvOptions['delimiter'], $csvOptions['enclosure'])) !== FALSE) {
