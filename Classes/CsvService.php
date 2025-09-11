@@ -162,7 +162,7 @@ class CsvService {
             throw new \Exception('CSV-Options not correctly set. ' . print_r($csvOptions, true));
         }
 
-		$handle = fopen($this->fileName, "r");
+		$handle = fopen($this->fileName, 'rb');
 		if ($handle === FALSE) {
 			throw new \Exception('No Handle');
 		}
@@ -170,10 +170,15 @@ class CsvService {
 		$bom = "\xef\xbb\xbf";
 		
 		// Progress file pointer and get first 3 characters to compare to the BOM string.
-		if (fgets($handle, 4) !== $bom) {
-		    // BOM not found - rewind pointer to start of file.
-		    rewind($handle);
-		}
+        // If no BOM was found, rewind pointer to start of file.
+        // In case of streams that are not seekable, we reopen the file.
+        if ((fgets($handle, 4) !== $bom) && !rewind($handle)) {
+            fclose($handle);
+            $handle = fopen($this->fileName, 'rb');
+            if ($handle === FALSE) {
+                throw new \Exception('No Handle');
+            }
+        }
 
 		$this->data = array();
 		while (($columnData = fgetcsv($handle, 0, $csvOptions['delimiter'], $csvOptions['enclosure'])) !== FALSE) {
